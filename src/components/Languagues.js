@@ -84,7 +84,7 @@ export const Dictionary = {
         'Language': 'EN',
         'Home': {
             'StackPreview': {
-                'title': 'Technology Stack',
+                'title': 'Development Stack',
                 'description': 'These are the technologies I have used in my projects.'
             }
         },

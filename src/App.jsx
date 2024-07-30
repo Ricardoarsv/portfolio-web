@@ -6,7 +6,7 @@ import { Dictionary } from './components/Languagues';
 
 
 export default function App() {
-  const [currentLanguage, setCurrentLanguage] = useState(Dictionary['ES']);
+  const [currentLanguage, setCurrentLanguage] = useState(Dictionary['EN']);
   const cursor = useRef();
 
   const handleLanguageChange = () => {
