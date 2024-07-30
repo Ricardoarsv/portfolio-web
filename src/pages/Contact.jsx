@@ -49,7 +49,7 @@ const Contact = ({ handleMouseRead, currentLanguage }) => {
   };
 
   return (
-    <section className='w-full h-screen sm:h-full relative bg-[#040927] bg-gradient-to-b from-black to-transparent flex flex-col md:flex-row items-center justify-center p-8'>
+    <section className='w-full relative bg-[#040927] bg-gradient-to-b from-black to-transparent flex flex-col md:flex-row items-center justify-center p-8'>
       <div className='min-w-[50%] mt-20 flex flex-col w-[90%] md:w-[50%] cursor-none'>
         <h1 className='text-white font-bold text-4xl hover:text-blue-500'>
           <span

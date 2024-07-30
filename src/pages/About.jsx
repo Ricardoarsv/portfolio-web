@@ -38,9 +38,9 @@ const About = ({ handleMouseRead, currentLanguage }) => {
   const handleMouseLeave = () => handleMouseRead(false);
 
   return (
-    <section className='w-full h-screen sm:h-full relative bg-[#1d0427] bg-gradient-to-b from-black to-transparent flex items-center justify-center'>
-      <div className='flex flex-col md:flex-row w-full'>
-        <div className='text-white text-center md:text-left p-6 h-screen mt-20 max-h-[60vh] md:max-h-[86vh] overflow-y-auto'>
+    <section className='w-full h-full relative bg-[#1d0427] bg-gradient-to-b from-black to-transparent flex items-center justify-center'>
+      <div className='flex flex-col justify-between h-full md:flex-row w-full'>
+        <div className='text-white text-center md:text-left p-6 h-screen mt-10 max-h-[60vh] md:max-h-[86vh] overflow-y-auto'>
           <MotionText
             className='font-bold text-3xl mb-4'
             onMouseEnter={handleMouse}

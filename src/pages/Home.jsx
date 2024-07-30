@@ -1,4 +1,4 @@
-import { useEffect, useState, Suspense } from 'react';
+import { useEffect, useState, Suspense, useRef } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { motion } from 'framer-motion';
 import Loader from '../components/Loader';
@@ -11,10 +11,12 @@ const Home = ({ handleMouseRead, currentLanguage }) => {
   const [loadedCount, setLoadedCount] = useState(0);
   const [showStack, setShowStack] = useState([false, null]);
   const [letterList, setLetterList] = useState([]);
-  const [currentTextIndex, setCurrentTextIndex] = useState(0);
-  const [charIndex, setCharIndex] = useState(0);
   const [isAdding, setIsAdding] = useState(true);
+  const [charIndex, setCharIndex] = useState(0);
+  const [currentTextIndex, setCurrentTextIndex] = useState(0);
+  const [isComplete, setIsComplete] = useState(false);
   const [loading, setLoading] = useState(true);
+  const letterRef = useRef(null);
   const backendText = 'Backend';
   const frontendText = 'Frontend';
   const fullstackText = 'Fullstack-Developer';
@@ -38,18 +40,18 @@ const Home = ({ handleMouseRead, currentLanguage }) => {
   ]
 
   useEffect(() => {
-    if (loadedCount === Stacks.length) {
-      setImagesLoaded(true);
-    }
-  }, [loadedCount, Stacks.length]);
+      if (loadedCount === Stacks.length) {
+        setImagesLoaded(true);
+      }
+    }, [loadedCount, Stacks.length]);
 
-  const handleImageLoad = () => {
-    setLoadedCount(prevCount => prevCount + 1);
-  };
+    const handleImageLoad = () => {
+      setLoadedCount(prevCount => prevCount + 1);
+    };
 
   useEffect(() => {
     const texts = [backendText, frontendText, fullstackText];
-    let currentText = texts[currentTextIndex];
+    const currentText = texts[currentTextIndex];
 
     const updateText = () => {
       if (isAdding) {
@@ -58,12 +60,24 @@ const Home = ({ handleMouseRead, currentLanguage }) => {
           setCharIndex(charIndex + 1);
         } else {
           setIsAdding(false);
+          setIsComplete(true);
+          setLetterList((prev) => [...prev, '_']);
           setTimeout(() => {
-            setIsAdding(true);
-            setCharIndex(0);
-            setCurrentTextIndex((currentTextIndex + 1) % texts.length);
-            setLetterList([]);
+            setIsAdding(false);
           }, 1000);
+          setTimeout(() => {
+            setIsComplete(false);
+          }, 300);
+        }
+      } else {
+        if (charIndex > 0) {
+          setLetterList((prev) => prev.slice(0, -1));
+          setCharIndex(charIndex - 1);
+        } else {
+          setIsAdding(true);
+          setCharIndex(0);
+          setCurrentTextIndex((currentTextIndex + 1) % texts.length);
+          setLetterList([]);
         }
       }
     };
@@ -84,8 +98,8 @@ const Home = ({ handleMouseRead, currentLanguage }) => {
   };
 
   const animateScale = (targetScale) => {
-    const duration = 1000; // Duration of the animation in milliseconds
-    const frameRate = 60; // Frames per second
+    const duration = 1000;
+    const frameRate = 60; 
     const totalFrames = (duration / 1000) * frameRate;
     const scaleIncrement = targetScale.map((target, index) => (target - 1) / totalFrames);
 
@@ -97,7 +111,7 @@ const Home = ({ handleMouseRead, currentLanguage }) => {
         currentFrame++;
         requestAnimationFrame(animate);
       } else {
-        setMoonOrbitScale(targetScale); // Ensure we end exactly at the target scale
+        setMoonOrbitScale(targetScale);
         setLoading(false);
       }
     };
@@ -137,11 +151,17 @@ const Home = ({ handleMouseRead, currentLanguage }) => {
                 handleMouseRead(false)
             }}
           >
-          {!loading ?  
-            letterList.map((letter, index) => (
-              <span key={index} className='inline-block'>{letter}</span>
-            )) : null
-          }
+         {!loading &&
+          letterList.map((letter, index) => (
+            <span
+              key={index}
+              ref={letterRef}
+              id='Letters'
+              className={`inline-block ${isComplete ? 'text-[#6402cc]' : ''}`}
+            >
+              {letter}
+            </span>
+          ))}
           </span>
         </div>
       )}

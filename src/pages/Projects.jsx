@@ -1,8 +1,8 @@
 import React from 'react';
-import PortfolioScene from '../assets/img/Portfolio-Scene.png';
-import HandleMinderScene from '../assets/img/HandleMinder-Scene.png';
-import HandleMinderAPIScene from '../assets/img/HandleMinderAPI-Scene.png';
-import IntranetGelvezScene from '../assets/img/IntranetGelvez-Scene.png';
+import PortfolioScene from '../assets/img/Portfolio-Scene.webp';
+import HandleMinderScene from '../assets/img/HandleMinder-Scene.webp';
+import HandleMinderAPIScene from '../assets/img/HandleMinderAPI-Scene.webp';
+import IntranetGelvezScene from '../assets/img/IntranetGelvez-Scene.webp';
 import GelvezPlaceholder from '../assets/img/GelvezPlaceholder.jpg';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
@@ -61,8 +61,8 @@ const Projects = ({ handleMouseRead, currentLanguage }) => {
   ];
 
   return (
-    <section className='w-full h-full md:h-screen relative bg-[#270419] bg-gradient-to-b from-black to-transparent flex items-center justify-center'>
-      <div className="mt-20 flex flex-col md:flex-row gap-8 max-w-[90%] overflow-x-auto overflow-y-hidden py-8">
+    <section className='w-full lg:h-full relative bg-[#270419] bg-gradient-to-b from-black to-transparent flex items-center justify-center'>
+      <div className="mt-10 flex flex-col md:flex-row gap-8 max-w-[90%] overflow-x-auto overflow-y-hidden py-8">
         {projects.map((project, index) => {
           const { ref, inView } = useInView({
             triggerOnce: true,

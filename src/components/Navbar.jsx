@@ -8,7 +8,7 @@ const Navbar = ({ handleLanguageChange }) => {
     return (
         <header className='header'>
             <button
-                className='text-[#ffffff61] text-1xl hover:text-white cursor-pointer fixed right-6 top-40 w-10 h-10 md:w-16 md:h-16 rounded-full border-2 border-[#ffffff61] hover:border-white'
+                className='text-[#ffffff61] text-1xl z-50 hover:text-white cursor-pointer fixed right-6 top-40 w-10 h-10 md:w-16 md:h-16 rounded-full border-2 border-[#ffffff61] hover:border-white'
                 onClick={handleLanguageChange}
             >
                 <FontAwesomeIcon className='text-1xl md:text-2xl' icon={faLanguage} />

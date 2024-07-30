@@ -15,26 +15,27 @@ export default function App() {
     };
 
   useEffect(() => {
-    const handleMouseMove = (e) => {
-      let x
-      let y
-      
-      if (cursor.current.className === 'Readcursor') {
-        x = e.clientX - 15;
-        y = e.clientY - 15;
-      } else {
-        x = e.clientX - 10;
-        y = e.clientY - 10;
+    if (window.innerWidth > 1000) {
+      const handleMouseMove = (e) => {
+        let x
+        let y
+        
+        if (cursor.current.className === 'Readcursor') {
+          x = e.clientX - 15;
+          y = e.clientY - 15;
+        } else {
+          x = e.clientX - 10;
+          y = e.clientY - 10;
+        }
+  
+        cursor.current.style.left = x + 'px';
+        cursor.current.style.top = y + 'px';
       }
-
-      cursor.current.style.left = x + 'px';
-      cursor.current.style.top = y + 'px';
-    };
-
-    window.addEventListener('mousemove', handleMouseMove);
-
-    return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
+      window.addEventListener('mousemove', handleMouseMove);
+  
+      return () => {
+        window.removeEventListener('mousemove', handleMouseMove);
+      };
     };
   }, []);
 
