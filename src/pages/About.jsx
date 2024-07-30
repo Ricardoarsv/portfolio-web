@@ -3,6 +3,7 @@ import Loader from '../components/Loader';
 import React, { Suspense, useEffect, useRef, useState } from 'react';
 import AboutMe from '../models/AboutMe';
 import MotionText from '../components/MotionText';
+import ricksCV from '../assets/docs/Ricardo_Villanueva_CV_ES.pdf'
 
 const About = ({ handleMouseRead, currentLanguage }) => {
   const [rotation, setRotation] = useState([0.37, 1.82, -0.2]);
@@ -42,11 +43,16 @@ const About = ({ handleMouseRead, currentLanguage }) => {
       <div className='flex flex-col justify-between h-full md:flex-row w-full'>
         <div className='text-white text-center md:text-left p-6 h-screen mt-10 max-h-[60vh] md:max-h-[86vh] overflow-y-auto'>
           <MotionText
-            className='font-bold text-3xl mb-4'
+            className='font-bold text-3xl mb-4 flex flex-row justify-between'
             onMouseEnter={handleMouse}
             onMouseLeave={handleMouseLeave}
           >
             {currentLanguage['About']['title']}
+            <a
+              onClick={() => window.open(ricksCV, '_blank')}
+              className='text-white hover:purple-gradient_text'>
+              {currentLanguage['About']['downloadCV']}
+            </a>
           </MotionText>
           <MotionText
             className='mb-4'
