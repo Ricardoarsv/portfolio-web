@@ -52,11 +52,12 @@ export default function App() {
   return (
     <main className='bg-[#b700ff2a] h-full bg-gradient-to-b from-black to-transparent'>
 
-        {/* {window.innerWidth > 1000 ? (
+        {window.innerWidth > 1000 ? (
             <div ref={cursor} id='CursorSphere' className='cursor' />
-          ) : null
-        } */}
-        <div ref={cursor} id='CursorSphere' className='cursor' />
+          ) : (
+            <div ref={cursor} id='CursorSphere' className='cursor hidden' />
+          )
+        }
 
         <Router>
             <Navbar handleLanguageChange={handleLanguageChange} />
