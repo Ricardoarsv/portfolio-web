@@ -11,7 +11,7 @@ export const Dictionary = {
             'title': 'Sobre mí',
             'name': 'Ricardo Villanueva',
             'firstPart': 'Mi nombre es',
-            'downloadCV': 'ver Curriculum',
+            'downloadCV': 'Ver CV',
             'secondPart' : ', un apasionado desarrollador con la firme creencia de que si necesitas algo, debes desarrollarlo. Así es como se logran aquellas expectativas que tienes.',
             'thirdPart': 'Mi aventura comenzó en 2019, cuando, para un proyecto escolar, me capacité para crear un script que permitiera a un Arduino detectar la distancia entre un objeto y el sensor de ultrasonido. Este fue el primer paso hacia lo que ahora es mi pasión.',
             'fourthPart': 'Apenas me gradué de secundaria, me inscribí en el SENA en el programa de Tecnología en Análisis y Desarrollo de Software, donde adquirí experiencias y habilidades en metodologías ágiles, Python, JavaScript, documentación de software, liderazgo en proyectos y bases de datos.',
@@ -92,7 +92,7 @@ export const Dictionary = {
         'About': {
             'title': 'About Me',
             'name': 'Ricardo Villanueva',
-            'downloadCV': 'See Curriculum',
+            'downloadCV': 'See CV',
             'firstPart': 'My name is',
             'secondPart': ', a passionate developer with a firm belief that if you need something, you should develop it. This is how you achieve those expectations you have.',
             'thirdPart': 'My journey began in 2019 when, for a school project, I learned to create a script that allowed an Arduino to detect the distance between an object and the ultrasonic sensor. This was the first step toward what is now my passion.',
