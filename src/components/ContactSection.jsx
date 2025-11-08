@@ -1,7 +1,6 @@
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { useState } from 'react';
-import emailjs from '@emailjs/browser';
 
 const ContactSection = ({ currentLanguage }) => {
 	const [ref, inView] = useInView({
@@ -32,19 +31,24 @@ const ContactSection = ({ currentLanguage }) => {
 		setStatus({ type: '', message: '' });
 
 		try {
-			await emailjs.send(
-				import.meta.env.VITE_EMAILJS_SERVICEID,
-				import.meta.env.VITE_EMAILJS_TEMPLATE_EMAIL,
-				{
-					from_name: formData.name,
-					to_name: 'Ricardo Villanueva',
-					from_email: formData.email,
-					to_email: 'ricardoarsv.2004@gmail.com',
+			const response = await fetch('/api/send-email', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({
+					name: formData.name,
+					email: formData.email,
 					subject: formData.subject,
 					message: formData.message
-				},
-				import.meta.env.VITE_EMAILJS_PUBLIC_KEY
-			);
+				})
+			});
+
+			const data = await response.json();
+
+			if (!response.ok) {
+				throw new Error(data.details || data.error || 'Failed to send email');
+			}
 
 			setStatus({
 				type: 'success',
@@ -56,12 +60,21 @@ const ContactSection = ({ currentLanguage }) => {
 
 			setFormData({ name: '', email: '', subject: '', message: '' });
 		} catch (error) {
+			// Log full error for debugging (visible in browser console)
+			console.error('Email send error:', error);
+
 			setStatus({
 				type: 'error',
 				message:
 					currentLanguage?.Language === 'EN'
-						? 'Failed to send message. Please try again or contact me directly via email.'
-						: 'Error al enviar el mensaje. Por favor intenta de nuevo o contáctame directamente por email.'
+						? `Failed to send message. ${
+								error.message ||
+								'Please try again or contact me directly via email.'
+						  }`
+						: `Error al enviar el mensaje. ${
+								error.message ||
+								'Por favor intenta de nuevo o contáctame directamente por email.'
+						  }`
 			});
 		} finally {
 			setIsLoading(false);
