@@ -1,15 +1,8 @@
-import { Resend } from 'resend';
+const { Resend } = require('resend');
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
-export default async function handler(req, res) {
-	// Only allow POST requests
-	if (req.method !== 'POST') {
-		return res.status(405).json({ error: 'Method not allowed' });
-	}
-
+module.exports = async function handler(req, res) {
 	// Enable CORS
-	res.setHeader('Access-Control-Allow-Credentials', true);
+	res.setHeader('Access-Control-Allow-Credentials', 'true');
 	res.setHeader('Access-Control-Allow-Origin', '*');
 	res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
 	res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
@@ -17,6 +10,11 @@ export default async function handler(req, res) {
 	// Handle OPTIONS request for CORS
 	if (req.method === 'OPTIONS') {
 		return res.status(200).end();
+	}
+
+	// Only allow POST requests
+	if (req.method !== 'POST') {
+		return res.status(405).json({ error: 'Method not allowed' });
 	}
 
 	try {
@@ -30,8 +28,11 @@ export default async function handler(req, res) {
 			});
 		}
 
+		// Initialize Resend with API key
+		const resend = new Resend(process.env.RESEND_API_KEY);
+
 		// Send email using Resend
-		const data = await resend.emails.send({
+		const { data, error } = await resend.emails.send({
 			from: 'Portfolio Contact <onboarding@resend.dev>',
 			to: 'ricardoarsv.2004@gmail.com',
 			replyTo: email,
@@ -134,6 +135,16 @@ export default async function handler(req, res) {
 			`
 		});
 
+		// Check for errors
+		if (error) {
+			console.error('Resend API error:', error);
+			return res.status(500).json({
+				success: false,
+				error: 'Failed to send email',
+				details: error.message
+			});
+		}
+
 		console.log('Email sent successfully:', data);
 
 		return res.status(200).json({
@@ -150,4 +161,4 @@ export default async function handler(req, res) {
 			details: error.message
 		});
 	}
-}
+};
