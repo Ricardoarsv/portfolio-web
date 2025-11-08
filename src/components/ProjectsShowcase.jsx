@@ -2,6 +2,11 @@ import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { useState } from 'react';
 
+import GundoFitnessImg from '../assets/img/Gundo-fitness.webp';
+import PortfolioSceneImg from '../assets/img/Portfolio-Scene.webp';
+import HandleMinderImg from '../assets/img/HandleMinder-Scene.webp';
+import IntranetGelvezImg from '../assets/img/IntranetGelvez-Scene.webp';
+
 const ProjectsShowcase = ({ currentLanguage }) => {
 	const [ref, inView] = useInView({
 		triggerOnce: true,
@@ -35,7 +40,7 @@ const ProjectsShowcase = ({ currentLanguage }) => {
 							'Firebase',
 							'Stripe'
 						],
-						image: '/src/assets/img/Gundo-fitness.webp',
+						image: GundoFitnessImg,
 						color: 'from-purple-600 to-purple-400',
 						highlights: [
 							'AI-Powered Nutrition Scanner',
@@ -64,7 +69,7 @@ const ProjectsShowcase = ({ currentLanguage }) => {
 							'Tailwind CSS',
 							'EmailJS'
 						],
-						image: '/src/assets/img/Portfolio-Scene.webp',
+						image: PortfolioSceneImg,
 						color: 'from-cyan-500 to-blue-500',
 						highlights: [
 							'3D Interactive Models',
@@ -93,7 +98,7 @@ const ProjectsShowcase = ({ currentLanguage }) => {
 							'FastAPI',
 							'JWT'
 						],
-						image: '/src/assets/img/HandleMinder-Scene.webp',
+						image: HandleMinderImg,
 						color: 'from-green-500 to-emerald-500',
 						highlights: [
 							'Expense & Income Tracking',
@@ -122,7 +127,7 @@ const ProjectsShowcase = ({ currentLanguage }) => {
 							'Firebase',
 							'Selenium'
 						],
-						image: '/src/assets/img/IntranetGelvez-Scene.webp',
+						image: IntranetGelvezImg,
 						color: 'from-indigo-600 to-purple-600',
 						highlights: [
 							'Automated Business Reports',
@@ -272,7 +277,7 @@ const ProjectsShowcase = ({ currentLanguage }) => {
 							'Firebase',
 							'Stripe'
 						],
-						image: '/src/assets/img/Gundo-fitness.webp',
+						image: GundoFitnessImg,
 						color: 'from-purple-600 to-purple-400',
 						highlights: [
 							'Escáner Nutricional con IA',
@@ -301,7 +306,7 @@ const ProjectsShowcase = ({ currentLanguage }) => {
 							'Tailwind CSS',
 							'EmailJS'
 						],
-						image: '/src/assets/img/Portfolio-Scene.webp',
+						image: PortfolioSceneImg,
 						color: 'from-cyan-500 to-blue-500',
 						highlights: [
 							'Modelos 3D Interactivos',
@@ -330,7 +335,7 @@ const ProjectsShowcase = ({ currentLanguage }) => {
 							'FastAPI',
 							'JWT'
 						],
-						image: '/src/assets/img/HandleMinder-Scene.webp',
+						image: HandleMinderImg,
 						color: 'from-green-500 to-emerald-500',
 						highlights: [
 							'Seguimiento de Gastos e Ingresos',
@@ -359,11 +364,10 @@ const ProjectsShowcase = ({ currentLanguage }) => {
 							'Firebase',
 							'Selenium'
 						],
-						image: '/src/assets/img/IntranetGelvez-Scene.webp',
+						image: IntranetGelvezImg,
 						color: 'from-indigo-600 to-purple-600',
 						highlights: [
 							'Reportes Empresariales Automatizados',
-							'Validación Masiva de Clientes',
 							'Sistema de Solicitudes de Inversión',
 							'Reducción de Costos SAP'
 						],

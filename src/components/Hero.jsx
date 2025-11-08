@@ -1,6 +1,9 @@
 import { motion } from 'framer-motion';
 import { useState, useEffect } from 'react';
 
+import CV_EN from '../assets/docs/Ricardo_Villanueva_CV_EN.pdf';
+import CV_ES from '../assets/docs/Ricardo_Villanueva_CV_ES.pdf';
+
 const Hero = ({ currentLanguage }) => {
 	const [text, setText] = useState('');
 	const [isDeleting, setIsDeleting] = useState(false);
@@ -212,11 +215,7 @@ const Hero = ({ currentLanguage }) => {
 					</motion.button>
 
 					<motion.a
-						href={
-							currentLanguage?.Language === 'EN'
-								? '/src/assets/docs/Ricardo_Villanueva_CV_EN.pdf'
-								: '/src/assets/docs/Ricardo_Villanueva_CV_ES.pdf'
-						}
+						href={currentLanguage?.Language === 'EN' ? CV_EN : CV_ES}
 						download={
 							currentLanguage?.Language === 'EN'
 								? 'Ricardo_Villanueva_CV_EN.pdf'
