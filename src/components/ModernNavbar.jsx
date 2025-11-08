@@ -29,7 +29,14 @@ const ModernNavbar = ({ handleLanguageChange, currentLanguage }) => {
 		const handleScroll = () => {
 			setScrolled(window.scrollY > 50);
 
-			const sections = ['home', 'experience', 'skills', 'projects', 'contact'];
+			const sections = [
+				'home',
+				'experience',
+				'education',
+				'skills',
+				'projects',
+				'contact'
+			];
 			const currentSection = sections.find((section) => {
 				const element = document.getElementById(section);
 				if (element) {
