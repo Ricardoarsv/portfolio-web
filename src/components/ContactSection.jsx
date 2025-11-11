@@ -363,7 +363,7 @@ const ContactSection = ({ currentLanguage }) => {
 								</div>
 							</div>
 
-							<motion.div
+							{/* <motion.div
 								initial={{ opacity: 0, y: 20 }}
 								animate={inView ? { opacity: 1, y: 0 } : {}}
 								transition={{ delay: 0.4 }}
@@ -382,7 +382,7 @@ const ContactSection = ({ currentLanguage }) => {
 										? "I'm currently available for freelance projects and full-time opportunities. Let's build something amazing together!"
 										: 'Actualmente estoy disponible para proyectos freelance y oportunidades de tiempo completo. ¡Construyamos algo increíble juntos!'}
 								</p>
-							</motion.div>
+							</motion.div> */}
 						</motion.div>
 					</div>
 				</motion.div>
