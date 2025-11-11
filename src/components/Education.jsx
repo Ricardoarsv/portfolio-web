@@ -339,7 +339,7 @@ const Education = ({ currentLanguage }) => {
 											{edu.skills.map((skill, idx) => (
 												<span
 													key={idx}
-													className='px-3 py-1 text-xs bg-purple-600/20 text-purple-300 rounded-full border border-purple-500/20'
+													className='px-3 py-1 text-xs bg-purple-600/20 text-purple-300 rounded-full border border-purple-500/20 cursor-default select-none'
 												>
 													{skill}
 												</span>

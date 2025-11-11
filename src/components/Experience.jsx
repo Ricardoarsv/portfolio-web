@@ -408,7 +408,7 @@ const Experience = ({ currentLanguage }) => {
 													initial={{ opacity: 0, scale: 0.8 }}
 													animate={{ opacity: 1, scale: 1 }}
 													transition={{ delay: idx * 0.05 }}
-													className='px-3 py-1.5 bg-purple-600/20 border border-purple-500/30 rounded-lg text-purple-300 text-sm font-medium hover:bg-purple-600/30 hover:border-purple-400/50 transition-all duration-300'
+													className='px-3 py-1.5 bg-purple-600/20 border border-purple-500/30 rounded-lg text-purple-300 text-sm font-medium hover:bg-purple-600/30 hover:border-purple-400/50 transition-all duration-300 cursor-default select-none'
 													whileHover={{ scale: 1.05 }}
 												>
 													{tech}

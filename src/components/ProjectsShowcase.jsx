@@ -77,7 +77,7 @@ const ProjectsShowcase = ({ currentLanguage }) => {
 							'Responsive 3D Design',
 							'Email Integration'
 						],
-						github: 'https://github.com/RicardoArsv/portfolio-web',
+						github: 'https://github.com/RicardoArsv/Portfolio3D',
 						demo: null
 					},
 					{
@@ -161,23 +161,29 @@ const ProjectsShowcase = ({ currentLanguage }) => {
 					},
 					{
 						id: 6,
-						title: 'Firebase Investment API',
+						title: 'HandleCost API',
 						category: 'Backend',
 						type: 'Personal',
 						description:
-							'API for managing investment requests in Firebase database.',
+							'RESTful API for financial management with JWT authentication and real-time statistics.',
 						longDescription:
-							'Flask-based API built to handle investment request creation and retrieval from Firebase. Provides a clean interface for managing financial investment data with secure authentication and data validation.',
-						technologies: ['Python', 'Flask', 'Firebase', 'REST API'],
+							'FastAPI-based API that provides backend services for HandleMinder financial management platform. Features robust JWT authentication, real-time financial statistics calculation, and comprehensive transaction management for informed decision-making.',
+						technologies: [
+							'Python',
+							'FastAPI',
+							'JWT',
+							'REST API',
+							'PostgreSQL'
+						],
 						image: '💼',
 						color: 'from-yellow-500 to-orange-500',
 						highlights: [
-							'Firebase Integration',
-							'Investment Management',
-							'RESTful Architecture',
-							'Secure Data Handling'
+							'JWT Authentication',
+							'Real-time Financial Stats',
+							'Transaction Management',
+							'RESTful Architecture'
 						],
-						github: null,
+						github: 'https://github.com/RicardoArsv/HandleCost-API',
 						demo: null
 					},
 					{
@@ -314,7 +320,7 @@ const ProjectsShowcase = ({ currentLanguage }) => {
 							'Diseño 3D Responsivo',
 							'Integración de Email'
 						],
-						github: 'https://github.com/RicardoArsv/portfolio-web',
+						github: 'https://github.com/RicardoArsv/Portfolio3D',
 						demo: null
 					},
 					{
@@ -397,23 +403,29 @@ const ProjectsShowcase = ({ currentLanguage }) => {
 					},
 					{
 						id: 6,
-						title: 'API de Inversiones Firebase',
+						title: 'HandleCost API',
 						category: 'Backend',
 						type: 'Personal',
 						description:
-							'API para gestión de solicitudes de inversión en base de datos Firebase.',
+							'API RESTful para gestión financiera con autenticación JWT y estadísticas en tiempo real.',
 						longDescription:
-							'API basada en Flask construida para manejar creación y recuperación de solicitudes de inversión desde Firebase. Proporciona una interfaz limpia para gestionar datos financieros de inversión con autenticación segura y validación de datos.',
-						technologies: ['Python', 'Flask', 'Firebase', 'API REST'],
+							'API basada en FastAPI que proporciona servicios backend para la plataforma de gestión financiera HandleMinder. Incluye autenticación robusta con JWT, cálculo de estadísticas financieras en tiempo real, y gestión completa de transacciones para toma de decisiones informadas.',
+						technologies: [
+							'Python',
+							'FastAPI',
+							'JWT',
+							'API REST',
+							'PostgreSQL'
+						],
 						image: '💼',
 						color: 'from-yellow-500 to-orange-500',
 						highlights: [
-							'Integración Firebase',
-							'Gestión de Inversiones',
-							'Arquitectura RESTful',
-							'Manejo Seguro de Datos'
+							'Autenticación JWT',
+							'Estadísticas Financieras en Tiempo Real',
+							'Gestión de Transacciones',
+							'Arquitectura RESTful'
 						],
-						github: null,
+						github: 'https://github.com/RicardoArsv/HandleCost-API',
 						demo: null
 					},
 					{
@@ -650,13 +662,13 @@ const ProjectsShowcase = ({ currentLanguage }) => {
 										{project.technologies.slice(0, 3).map((tech, idx) => (
 											<span
 												key={idx}
-												className='px-2 py-0.5 text-xs bg-purple-600/20 text-purple-300 rounded border border-purple-500/20'
+												className='px-2 py-0.5 text-xs bg-purple-600/20 text-purple-300 rounded border border-purple-500/20 cursor-default select-none'
 											>
 												{tech}
 											</span>
 										))}
 										{project.technologies.length > 3 && (
-											<span className='px-2 py-0.5 text-xs bg-purple-700/30 text-purple-400 rounded border border-purple-500/20'>
+											<span className='px-2 py-0.5 text-xs bg-purple-700/30 text-purple-400 rounded border border-purple-500/20 cursor-default select-none'>
 												+{project.technologies.length - 3}
 											</span>
 										)}
@@ -775,7 +787,7 @@ const ProjectsShowcase = ({ currentLanguage }) => {
 									{selectedProject.technologies.map((tech, idx) => (
 										<span
 											key={idx}
-											className='px-4 py-2 bg-purple-500/20 border border-purple-500/30 rounded-full text-purple-300 text-sm font-medium'
+											className='px-4 py-2 bg-purple-500/20 border border-purple-500/30 rounded-full text-purple-300 text-sm font-medium cursor-default select-none'
 										>
 											{tech}
 										</span>

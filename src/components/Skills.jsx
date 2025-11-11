@@ -30,49 +30,49 @@ const Skills = ({ currentLanguage }) => {
 	const skills = [
 		{
 			name: 'React.js',
-			level: 95,
+			projects: 8,
 			category: 'frontend',
 			icon: '⚛️',
 			color: 'from-cyan-400 to-blue-500'
 		},
 		{
 			name: 'Next.js',
-			level: 90,
+			projects: 1,
 			category: 'frontend',
 			icon: '▲',
 			color: 'from-gray-700 to-black'
 		},
 		{
 			name: 'React Native',
-			level: 88,
+			projects: 1,
 			category: 'frontend',
 			icon: '📱',
 			color: 'from-blue-400 to-cyan-500'
 		},
 		{
 			name: 'TypeScript',
-			level: 92,
+			projects: 8,
 			category: 'frontend',
 			icon: 'TS',
 			color: 'from-blue-600 to-blue-400'
 		},
 		{
 			name: 'Tailwind CSS',
-			level: 95,
+			projects: 6,
 			category: 'frontend',
 			icon: '🎨',
 			color: 'from-cyan-500 to-blue-500'
 		},
 		{
 			name: 'Three.js',
-			level: 75,
+			projects: 1,
 			category: 'frontend',
 			icon: '🎮',
 			color: 'from-black to-gray-600'
 		},
 		{
 			name: 'Vite',
-			level: 90,
+			projects: 4,
 			category: 'frontend',
 			icon: '⚡',
 			color: 'from-purple-500 to-yellow-500'
@@ -80,49 +80,49 @@ const Skills = ({ currentLanguage }) => {
 
 		{
 			name: 'Node.js',
-			level: 93,
+			projects: 3,
 			category: 'backend',
 			icon: '🟢',
 			color: 'from-green-600 to-green-400'
 		},
 		{
 			name: 'NestJS',
-			level: 90,
+			projects: 1,
 			category: 'backend',
 			icon: '🐱',
 			color: 'from-red-500 to-pink-500'
 		},
 		{
 			name: 'Python',
-			level: 95,
+			projects: 6,
 			category: 'backend',
 			icon: '🐍',
 			color: 'from-blue-500 to-yellow-500'
 		},
 		{
 			name: 'Django',
-			level: 85,
+			projects: 1,
 			category: 'backend',
 			icon: '🎯',
 			color: 'from-green-700 to-green-500'
 		},
 		{
 			name: 'FastAPI',
-			level: 88,
+			projects: 1,
 			category: 'backend',
 			icon: '⚡',
 			color: 'from-teal-500 to-green-500'
 		},
 		{
 			name: 'Flask',
-			level: 82,
+			projects: 1,
 			category: 'backend',
 			icon: '🧪',
 			color: 'from-gray-700 to-gray-500'
 		},
 		{
 			name: 'Express.js',
-			level: 90,
+			projects: 1,
 			category: 'backend',
 			icon: '🚂',
 			color: 'from-gray-600 to-gray-400'
@@ -130,35 +130,35 @@ const Skills = ({ currentLanguage }) => {
 
 		{
 			name: 'Google Cloud',
-			level: 87,
+			projects: 1,
 			category: 'cloud',
 			icon: '☁️',
 			color: 'from-blue-500 to-red-500'
 		},
 		{
 			name: 'Firebase',
-			level: 92,
+			projects: 4,
 			category: 'cloud',
 			icon: '🔥',
 			color: 'from-yellow-500 to-orange-500'
 		},
 		{
 			name: 'Docker',
-			level: 85,
+			projects: 2,
 			category: 'cloud',
 			icon: '🐳',
 			color: 'from-blue-500 to-cyan-400'
 		},
 		{
 			name: 'Git',
-			level: 93,
+			projects: 12,
 			category: 'cloud',
 			icon: '📚',
 			color: 'from-orange-600 to-red-500'
 		},
 		{
 			name: 'CI/CD',
-			level: 85,
+			projects: 2,
 			category: 'cloud',
 			icon: '🔄',
 			color: 'from-purple-500 to-pink-500'
@@ -166,28 +166,28 @@ const Skills = ({ currentLanguage }) => {
 
 		{
 			name: 'Vertex AI',
-			level: 85,
+			projects: 1,
 			category: 'ai',
 			icon: '🤖',
 			color: 'from-blue-600 to-purple-600'
 		},
 		{
 			name: 'OpenAI',
-			level: 90,
+			projects: 2,
 			category: 'ai',
 			icon: '🧠',
 			color: 'from-green-400 to-cyan-500'
 		},
 		{
 			name: 'Mastra Framework',
-			level: 82,
+			projects: 1,
 			category: 'ai',
 			icon: '🎭',
 			color: 'from-purple-600 to-pink-600'
 		},
 		{
 			name: 'Multi-Agent Systems',
-			level: 88,
+			projects: 1,
 			category: 'ai',
 			icon: '🤝',
 			color: 'from-indigo-500 to-purple-500'
@@ -304,37 +304,56 @@ const Skills = ({ currentLanguage }) => {
 								key={skill.name}
 								variants={itemVariants}
 								layout
-								className='group relative bg-purple-900/10 backdrop-blur-md border border-purple-500/20 rounded-2xl p-6 hover:bg-purple-600/20 hover:border-purple-500/40 transition-all duration-300 overflow-hidden'
+								className='group relative bg-purple-900/10 backdrop-blur-md border border-purple-500/20 rounded-2xl p-6 hover:bg-purple-600/20 hover:border-purple-500/40 transition-all duration-300 overflow-hidden cursor-default select-none'
 								whileHover={{ scale: 1.02 }}
 							>
 								<div className='relative z-10'>
 									<div className='flex items-center justify-between mb-4'>
 										<div className='flex items-center gap-3'>
-											<div className='w-12 h-12 rounded-xl bg-purple-600/30 border border-purple-500/40 flex items-center justify-center text-2xl'>
+											<div className='w-12 h-12 rounded-xl bg-purple-600/30 border border-purple-500/40 flex items-center justify-center text-2xl select-none'>
 												{skill.icon}
 											</div>
-											<h3 className='text-neutral-white font-semibold text-lg'>
+											<h3 className='text-neutral-white font-semibold text-lg select-none'>
 												{skill.name}
 											</h3>
 										</div>
-										<span className='text-purple-300 font-bold text-lg'>
-											{skill.level}%
+										<span className='px-3 py-1 bg-purple-600/30 border border-purple-500/40 rounded-full text-purple-200 font-bold text-sm select-none'>
+											{skill.projects}{' '}
+											{currentLanguage?.Language === 'EN'
+												? skill.projects === 1
+													? 'project'
+													: 'projects'
+												: skill.projects === 1
+												? 'proyecto'
+												: 'proyectos'}
 										</span>
 									</div>
 
-									<div className='relative h-2 bg-purple-950 border border-purple-800/30 rounded-full overflow-hidden'>
-										<motion.div
-											className='absolute top-0 left-0 h-full bg-gradient-to-r from-purple-600 to-purple-500 rounded-full'
-											initial={{ width: 0 }}
-											animate={
-												inView ? { width: `${skill.level}%` } : { width: 0 }
-											}
-											transition={{
-												duration: 1,
-												delay: index * 0.05,
-												ease: 'easeOut'
-											}}
-										/>
+									<div className='flex gap-1'>
+										{Array.from({ length: Math.min(skill.projects, 10) }).map(
+											(_, i) => (
+												<motion.div
+													key={i}
+													className='flex-1 h-2 bg-gradient-to-r from-purple-600 to-purple-500 rounded-full'
+													initial={{ opacity: 0, scale: 0 }}
+													animate={
+														inView
+															? { opacity: 1, scale: 1 }
+															: { opacity: 0, scale: 0 }
+													}
+													transition={{
+														duration: 0.3,
+														delay: index * 0.05 + i * 0.05,
+														ease: 'easeOut'
+													}}
+												/>
+											)
+										)}
+										{skill.projects > 10 && (
+											<span className='text-purple-300 text-xs font-bold ml-1 select-none'>
+												+
+											</span>
+										)}
 									</div>
 								</div>
 							</motion.div>
