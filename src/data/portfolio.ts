@@ -482,3 +482,35 @@ const SHOTS: Record<string, Shot[]> = {
   ],
 };
 for (const item of [...jobs, ...projects]) if (SHOTS[item.id]) item.shots = SHOTS[item.id];
+
+/* ---------- contenido por idioma ---------- */
+import { en } from './en';
+import type { Lang } from '../i18n/ui';
+
+export function getContent(lang: Lang) {
+  const base = { profile, jobs, projects, skills, activity, education, certifications };
+  if (lang === 'es') return base;
+  const c = structuredClone(base);
+  Object.assign(c.profile, en.profile);
+  c.education.forEach((e, i) => Object.assign(e, en.education[i]));
+  c.certifications.forEach((cert) => { cert.items = cert.items.map(([n, y]) => [en.certifications[n] ?? n, y] as [string, string]); });
+  const shotText = (s: Shot) => { const f = s.src.split('/').pop()!.replace('.webp', ''); const t = en.shots[f]; if (t) { s.alt = t; s.caption = t; } };
+  c.jobs.forEach((j) => {
+    const t = en.jobs[j.id]; if (!t) return;
+    const { metrics, client, product, ...rest } = t;
+    Object.assign(j, rest);
+    metrics?.forEach((m, i) => { j.metrics[i].label = m.label; if (m.suffix !== undefined) j.metrics[i].suffix = m.suffix; });
+    if (client && j.client) j.client.name = client;
+    if (product && j.product) j.product.name = product;
+    j.shots?.forEach(shotText);
+  });
+  c.projects.forEach((p) => { const t = en.projects[p.id]; if (t) Object.assign(p, t); p.shots?.forEach(shotText); });
+  c.skills.forEach((s) => {
+    const t = en.skills[s.id]; if (!t) return;
+    if (t.code) s.code = t.code; if (t.name) s.name = t.name; if (t.desc) s.desc = t.desc;
+    s.uses.forEach((u) => { if (t.uses?.[u.ref]) u.how = t.uses[u.ref]; });
+  });
+  c.activity.sources.forEach((src, i) => { const t = en.sources[i]; if (!t) return; if (t.name) src.name = t.name; if (t.handle) src.handle = t.handle; src.stats = t.stats; });
+  return c;
+}
+export type Content = ReturnType<typeof getContent>;

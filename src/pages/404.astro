@@ -1,0 +1,19 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base lang="es" title="404 · rickdev.tech" description="Página no encontrada." ogLocale="es_CO" noindex>
+  <main class="notfound">
+    <pre aria-hidden="true">rv $ cd {Astro.url.pathname}
+bash: cd: no such file or directory</pre>
+    <h1>404</h1>
+    <p>Esta página no existe. <span lang="en">This page does not exist.</span></p>
+    <p class="links"><a class="btn dark" href="/">Volver al portfolio</a><a class="btn" href="/en/" hreflang="en">Back to the portfolio</a></p>
+  </main>
+</Base>
+<style>
+  .notfound { min-height: 100%; display: flex; flex-direction: column; justify-content: center; gap: 14px; padding: 32px; max-width: 720px; margin: 0 auto; }
+  .notfound pre { font-family: var(--mono); font-size: 13px; color: var(--muted); margin: 0; white-space: pre-wrap; }
+  .notfound h1 { font-family: var(--mono); font-size: 72px; margin: 0; letter-spacing: -.04em; }
+  .notfound p { margin: 0; font-size: 15px; line-height: 1.6; }
+  .notfound .links { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 8px; }
+</style>

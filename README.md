@@ -34,3 +34,16 @@ npm run preview
 
 - `Ctrl K`: buscar empresa, proyecto o tecnología.
 - `1` a `5`: enfocar un panel. `Esc`: volver al mosaico.
+
+## Idiomas
+
+- `/` en español y `/en/` en inglés, con `hreflang` en el `<head>` y en el sitemap.
+- El contenido vive en español en `src/data/portfolio.ts`; `src/data/en.ts` traduce solo los textos por identificador. Los textos de la interfaz están en `src/i18n/ui.ts`.
+
+## SEO y Google
+
+- `robots.txt`, sitemap bilingüe (`/sitemap-index.xml`), canonical, Open Graph, Twitter Card y JSON-LD (Person, WebSite, ProfilePage).
+- Google Analytics 4 y Search Console se activan con variables de entorno (ver `.env.example`); en Vercel van en **Settings → Environment Variables**:
+  - `PUBLIC_GA_ID`: ID de medición `G-XXXXXXXXXX`.
+  - `PUBLIC_GSC_VERIFICATION`: token de la meta `google-site-verification` (opcional si verificas por DNS).
+- Eventos propios en GA4: `focus_pane`, `grid_view`, `select_job`, `select_project`, `search`, `view_screenshot`, `theme_change` y `language_change`, todos con `site_language`. Las descargas del CV y los enlaces externos los mide la medición mejorada de GA4.

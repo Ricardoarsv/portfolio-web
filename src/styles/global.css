@@ -140,6 +140,7 @@ img { max-width: 100%; }
 .nums div:nth-child(3n) { border-right: none; }
 .nums dd { display: block; margin: 0; font-family: var(--mono); font-size: 18px; font-weight: 700; font-variant-numeric: tabular-nums; }
 .nums dt { font-size: 11px; color: var(--muted); }
+.nums dd.txt { font-size: 15px; overflow-wrap: anywhere; }
 .did { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 9px; counter-reset: d; }
 .did li { position: relative; padding-left: 30px; font-size: 14px; line-height: 1.55; counter-increment: d; }
 .did li::before { content: counter(d, decimal-leading-zero); position: absolute; left: 0; top: 2px; font-family: var(--mono); font-size: 10px; color: var(--hlText); }
@@ -325,3 +326,9 @@ button.chip:hover, .chip.lit { background: var(--hl); color: var(--onHl); transf
   .pane.focused .banner.paper img { height: 250px; }
   .pane.focused .banner img:not(.banner.cover img) { height: 120px; width: 120px; }
 }
+
+/* selector de idioma */
+.lang { display: inline-flex; border: 1px solid var(--ink); }
+.lang a { text-decoration: none; padding: 6px 9px; font-family: var(--mono); font-size: 11px; min-height: 34px; display: inline-flex; align-items: center; transition: background-color .2s; }
+.lang a:hover { background: var(--hl); color: var(--onHl); }
+.lang a[aria-current="page"] { background: var(--ink); color: var(--sheet); }

@@ -1,0 +1,303 @@
+---
+import Base from '../layouts/Base.astro';
+import Logo from './Logo.astro';
+import { getContent } from '../data/portfolio';
+import { ui, path, type Lang } from '../i18n/ui';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = ui[lang];
+const { profile, jobs, projects, skills, activity, education, certifications } = getContent(lang);
+
+const heat = (n: number) => (n === 0 ? 0 : n < 5 ? 1 : n < 15 ? 2 : n < 50 ? 3 : 4);
+const fmt = (m: { value: number | string; suffix?: string; decimals?: number }) =>
+  typeof m.value === 'number'
+    ? m.value.toLocaleString(t.locale, { minimumFractionDigits: m.decimals ?? 0, maximumFractionDigits: m.decimals ?? 0 }) + (m.suffix ?? '')
+    : m.value;
+const first = { job: jobs[0].id, proj: projects[0].id };
+const cvMain = lang === 'es' ? profile.cv.es : profile.cv.en;
+const cvOther = lang === 'es' ? profile.cv.en : profile.cv.es;
+const groups = [['work', t.work], ['personal', t.personal]] as const;
+---
+<Base lang={lang} title={t.title} description={t.description} ogLocale={t.ogLocale}>
+  <a class="skip-link" href="#p-exp">{t.skip}</a>
+
+  <div class="boot" id="boot" aria-hidden="true">
+    <div id="bootOut"></div>
+    <div class="prog"><span id="pct">0%</span><i id="bar"></i><button type="button" class="skip" id="skip">{t.skipBoot}</button></div>
+  </div>
+
+  <div class="ws">
+    <div class="top">
+      <span><b>rv</b> · {t.workspace} · <span id="clock">Cúcuta, Colombia</span></span>
+      <button type="button" class="search" id="openPal" aria-haspopup="dialog"><span><span class="long">{t.search}</span><span class="short">{t.searchShort}</span></span><span class="k">Ctrl K</span></button>
+      <span class="tools">
+        <span class="keys"><span class="k">1</span>–<span class="k">5</span> {t.focusKeys}</span>
+        <nav class="lang" aria-label={t.langAria}>
+          <a href={path('es')} hreflang="es" lang="es" aria-current={lang === 'es' ? 'page' : undefined}>ES</a>
+          <a href={path('en')} hreflang="en" lang="en" aria-current={lang === 'en' ? 'page' : undefined}>EN</a>
+        </nav>
+        <button type="button" class="theme" id="theme" aria-label={t.themeAria}><span class="orb" aria-hidden="true"></span><span id="themeLbl">{t.day}</span></button>
+      </span>
+    </div>
+
+    <main class="tiles" id="tiles">
+      <section class="pane" id="p-perfil" style="--vt:perfil;--i:0" aria-labelledby="h-perfil">
+        <header><h2 id="h-perfil">1 · {t.panes.perfil}</h2><button type="button" data-zoom="perfil" aria-pressed="false">{t.focus}</button></header>
+        <div class="body">
+          <div class="me">
+            <div class="ph"><img src={profile.avatar} alt={t.avatarAlt} width="84" height="84" /></div>
+            <div><h1>Ricardo<br />Villanueva</h1><div class="r"><span class="live" aria-hidden="true"></span>{profile.role} · {t.available}</div></div>
+          </div>
+          <div class="full">
+            <p class="lead" style="margin-top:14px">{profile.bio}</p>
+            <dl class="facts">
+              <dt>{t.facts.base}</dt><dd>{profile.location} · {t.remote}</dd>
+              <dt>{t.facts.langs}</dt><dd>{profile.languages}</dd>
+              <dt>{t.facts.studies}</dt><dd>{t.studiesLine}</dd>
+              <dt>{t.facts.email}</dt><dd><a href={`mailto:${profile.email}`}>{profile.email}</a></dd>
+            </dl>
+            <div class="links">
+              <a class="btn dark" href={cvMain} download>{t.cvMain}</a>
+              <a class="btn" href={cvOther} download>{t.cvOther}</a>
+              <a class="btn" href={profile.linkedin} rel="me noopener" target="_blank">LinkedIn ↗</a>
+              <a class="btn" href={profile.github} rel="me noopener" target="_blank">GitHub ↗</a>
+            </div>
+          </div>
+          <div class="full about-more">
+            <section>
+              <div class="label">{t.about}</div>
+              {profile.about.map((p) => <p class="lead">{p}</p>)}
+            </section>
+            <section>
+              <div class="label">{t.studies}</div>
+              <ul class="studies">
+                {education.map((e) => (
+                  <li><Logo logo={e.logo} alt={e.org} /><span><b>{e.title}</b><small>{e.org}</small><small class="mono">{e.dates}{e.status ? ` · ${e.status}` : ''}</small></span></li>
+                ))}
+              </ul>
+            </section>
+            <section>
+              <div class="label">{t.certs}</div>
+              <ul class="certs">
+                {certifications.map((c) => (
+                  <li>
+                    <div class="issuer">{c.logo ? <Logo logo={c.logo} alt="" /> : <span class="mk txt">{c.issuer.slice(0, 1)}</span>}<b>{c.issuer}</b></div>
+                    <ul>{c.items.map(([n, y]) => <li><span>{n}</span><small>{y}</small></li>)}</ul>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          </div>
+          <figure class="scene" aria-hidden="true">
+            <img class="l" src="/img/scenes/office-day.gif" alt="" loading="lazy" width="200" height="100" />
+            <img class="d" src="/img/scenes/office-night.gif" alt="" loading="lazy" width="200" height="100" />
+          </figure>
+        </div>
+      </section>
+
+      <section class="pane" id="p-exp" style="--vt:exp;--i:1" aria-labelledby="h-exp">
+        <header><h2 id="h-exp">2 · {t.panes.exp}</h2><button type="button" data-zoom="exp" aria-pressed="false">{t.focus}</button></header>
+        <div class="body">
+          <div class="exp">
+            <ul class="log" id="log">
+              <li class="cur" id="cur" aria-hidden="true"></li>
+              {jobs.map((j) => (
+                <li>
+                  <button type="button" data-job={j.id} aria-pressed={j.id === first.job ? 'true' : 'false'} aria-controls={`case-${j.id}`}>
+                    <Logo logo={j.logo} alt="" />
+                    <span><b>{j.company}</b><small>{j.dates} · {j.active ? t.active : t.closed}</small></span>
+                  </button>
+                </li>
+              ))}
+            </ul>
+            <div class="full">
+              {jobs.map((j) => (
+                <article class="case" id={`case-${j.id}`} data-case={j.id} hidden={j.id !== first.job}>
+                  <div class="hd">
+                    <div><h3>{j.company}</h3><div class="sub">{j.role} · {j.place} · {j.dates}</div></div>
+                    <Logo logo={j.logo} alt={j.company} />
+                  </div>
+                  <div class="ctx">
+                    {j.client && <span class="tag"><Logo logo={j.client.logo} alt="" /><span><small>{t.client}</small>{j.client.name}</span></span>}
+                    {j.product && <span class="tag"><Logo logo={j.product.logo} alt="" /><span><small>{t.product}</small>{j.product.name}</span></span>}
+                    <span class="pill" style={`color:${j.active ? 'var(--ok)' : 'var(--muted)'}`}>{j.active ? t.activePill : t.donePill}</span>
+                    {j.roleNote && <span class="pill" style="color:var(--muted)">{j.roleNote}</span>}
+                  </div>
+                  <dl class="nums">
+                    {j.metrics.map((m) => (
+                      <div><dd class:list={[{ txt: typeof m.value !== 'number' }]} data-count={typeof m.value === 'number' ? m.value : undefined} data-dec={m.decimals ?? 0} data-suffix={m.suffix ?? ''}>{fmt(m)}</dd><dt>{m.label}</dt></div>
+                    ))}
+                  </dl>
+                  <p class="lead">{j.summary}</p>
+                  <div class="label">{t.did}</div>
+                  <ol class="did">{j.did.map((d) => <li>{d}</li>)}</ol>
+                  {projects.some((p) => p.job === j.id) && (
+                    <>
+                      <div class="label">{t.jobProjects}</div>
+                      <div class="goprojs">
+                        {projects.filter((p) => p.job === j.id).map((p) => (
+                          <button type="button" class="goproj" data-goproj={p.id}>
+                            <span class:list={['ic', { paper: p.banner === 'paper' }]}>{p.icon ? <img src={p.icon} alt="" loading="lazy" /> : '>_'}</span>
+                            <span><b>{p.name}</b><small>{p.short}</small></span>
+                            <span class="arrow" aria-hidden="true">→</span>
+                          </button>
+                        ))}
+                      </div>
+                    </>
+                  )}
+                  {j.shots && j.shots.length > 0 && (
+                    <>
+                      <div class="label">{t.shots}</div>
+                      <div class="shots">
+                        {j.shots.map((s) => (
+                          <figure><button type="button" data-shot={s.src} data-caption={s.caption ?? s.alt}><img class={s.fit === 'contain' ? 'contain' : ''} src={s.src} alt={s.alt} loading="lazy" decoding="async" /></button>{s.caption && <figcaption>{s.caption}</figcaption>}</figure>
+                        ))}
+                      </div>
+                    </>
+                  )}
+                  {j.clients && (
+                    <>
+                      <div class="label">{t.clients}</div>
+                      <div class="clients">{j.clients.map((c) => <Logo logo={c.logo} alt={c.name} />)}</div>
+                    </>
+                  )}
+                  <div class="label">{t.stack}</div>
+                  <ul class="chips">{j.stack.map((s) => <li class="chip" data-tool={s}>{s}</li>)}</ul>
+                </article>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="pane" id="p-proj" style="--vt:proj;--i:2" aria-labelledby="h-proj">
+        <header><h2 id="h-proj">3 · {t.panes.proj}</h2><button type="button" data-zoom="proj" aria-pressed="false">{t.focus}</button></header>
+        <div class="body">
+          <ul class="plist" id="plist">
+            {groups.map(([scope, label]) => (
+              <>
+                <li class="group" aria-hidden="true">{label}</li>
+                {projects.filter((p) => p.scope === scope).map((p) => (
+                  <li>
+                    <button type="button" data-proj={p.id} aria-pressed={p.id === first.proj ? 'true' : 'false'} aria-controls={`proj-${p.id}`}>
+                      <span class:list={['ic', { paper: p.banner === 'paper' }]}>{p.icon ? <img src={p.icon} alt="" loading="lazy" /> : '>_'}</span>
+                      <span><b>{p.name}</b><small>{p.org ? `${p.org} · ` : ''}{p.short}</small></span>
+                    </button>
+                  </li>
+                ))}
+              </>
+            ))}
+          </ul>
+          <div class="full">
+            {projects.map((p) => (
+              <article class="pdetail" id={`proj-${p.id}`} data-pdetail={p.id} hidden={p.id !== first.proj}>
+                {p.banner === 'cover' && <div class="banner cover"><img src={p.cover ?? p.icon!} alt="" loading="lazy" /></div>}
+                {p.banner === 'paper' && <div class="banner paper"><img src={p.cover ?? p.icon!} alt="" loading="lazy" /></div>}
+                {p.banner === 'icon' && (
+                  <div class="banner" style={`background:radial-gradient(circle at 50% 130%,${p.color}66,transparent 70%),var(--paper)`}>
+                    <img src={p.icon!} alt="" loading="lazy" />
+                    {p.extraIcons?.map((x) => <img src={x} alt="" loading="lazy" />)}
+                  </div>
+                )}
+                {p.banner === 'glyph' && <div class="banner" style="background:var(--paper)"><span class="glyph">&gt;_ 38 · 11</span></div>}
+                <div><span class="label">{p.scope === 'work' ? t.workOne : t.personalOne} · {p.kind.toUpperCase()} · {p.role.toUpperCase()}</span><h3>{p.name}</h3>{p.org && <div class="sub" style="font-size:13px;color:var(--muted);margin-top:2px">{p.org}</div>}</div>
+                <p class="lead">{p.desc}</p>
+                <div class="label">{t.did}</div>
+                <ol class="did">{p.did.map((d) => <li>{d}</li>)}</ol>
+                {p.shots && p.shots.length > 0 && (
+                  <div class="shots">
+                    {p.shots.map((s) => (
+                      <figure><button type="button" data-shot={s.src} data-caption={s.caption ?? s.alt}><img class={s.fit === 'contain' ? 'contain' : ''} src={s.src} alt={s.alt} loading="lazy" decoding="async" /></button>{s.caption && <figcaption>{s.caption}</figcaption>}</figure>
+                    ))}
+                  </div>
+                )}
+                <ul class="chips">{p.stack.map((s) => <li class="chip" data-tool={s}>{s}</li>)}</ul>
+                {p.url && <a class="btn dark" style="align-self:flex-start" href={p.url} target="_blank" rel="noopener">{t.visit} {p.name} ↗</a>}
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section class="pane" id="p-stack" style="--vt:stack;--i:3" aria-labelledby="h-stack">
+        <header><h2 id="h-stack">4 · {t.panes.stack}</h2><button type="button" data-zoom="stack" aria-pressed="false">{t.focus}</button></header>
+        <div class="body">
+          <p class="hint">{t.stackHint}</p>
+          <div id="stack">
+            {skills.map((s) => (
+              <div class="branch">
+                <h3><b>{s.name}</b><span>{s.code}</span></h3>
+                <div class="chips">{s.tools.map((tool) => <button type="button" class="chip" data-tool={tool}>{tool}</button>)}</div>
+                <div class="full bdetail">
+                  <p class="lead">{s.desc}</p>
+                  <ul class="uses">
+                    {s.uses.map((u) => {
+                      const j = jobs.find((x) => x.id === u.ref);
+                      const p = projects.find((x) => x.id === u.ref);
+                      return (
+                        <li>
+                          {j ? <Logo logo={j.logo} alt="" /> : <span class:list={['ic', { paper: p?.banner === 'paper' }]}>{p?.icon ? <img src={p.icon} alt="" loading="lazy" /> : '>_'}</span>}
+                          <span><b>{j ? j.company : p?.name}</b><small>{u.how}</small></span>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section class="pane" id="p-act" style="--vt:act;--i:4" aria-labelledby="h-act">
+        <header><h2 id="h-act">5 · {t.panes.act}</h2><button type="button" data-zoom="act" aria-pressed="false">{t.focus}</button></header>
+        <div class="body">
+          <div class="act">
+            <div class="heat" role="img" aria-label={t.heatAria}>
+              {activity.weeks.map((w, wi) => w.map((n, di) => <i style={`--w:${wi + di * 0.4};background:var(--heat${heat(n)})`} title={`${n} ${t.contribTitle}`}></i>))}
+            </div>
+            <div><b style="font-family:var(--mono);font-size:26px" id="contrib">{activity.total.toLocaleString(t.locale)}</b><div style="font-size:12px;color:var(--muted)">{t.totalCaption}</div></div>
+          </div>
+          <div class="full sources">
+            {activity.sources.map((src) => (
+              <section class="source">
+                <h3>{src.url ? <a href={src.url} target="_blank" rel="noopener">{src.name} ↗</a> : src.name}<small>{src.handle}</small></h3>
+                <dl>{src.stats.map(([v, l]) => <div><dd>{v}</dd><dt>{l}</dt></div>)}</dl>
+                {src.bars && (
+                  <ul class="bars">
+                    {src.bars.map(([n, v]) => <li><span>{n}</span><i style={`--v:${v / src.bars![0][1]}`}></i><b>{v}</b></li>)}
+                  </ul>
+                )}
+              </section>
+            ))}
+          </div>
+          <figure class="scene" aria-hidden="true">
+            <img class="l" src="/img/scenes/city-day.gif" alt="" loading="lazy" width="200" height="84" />
+            <img class="d" src="/img/scenes/city-night.gif" alt="" loading="lazy" width="200" height="84" />
+            <figcaption>{t.cityCaption}</figcaption>
+          </figure>
+        </div>
+      </section>
+    </main>
+
+    <footer class="status"><span><span class="k">●</span> {t.status}</span><span><span class="k">Ctrl K</span> {t.statusKeys[0]} · <span class="k">1–5</span> {t.statusKeys[1]} · <span class="k">Esc</span> {t.statusKeys[2]}</span></footer>
+  </div>
+
+  <div class="pal" id="pal" role="dialog" aria-modal="true" aria-label={t.palAria}>
+    <div class="box">
+      <label for="q" class="sr">{t.palAria}</label>
+      <input id="q" placeholder={t.palPlaceholder} autocomplete="off" role="combobox" aria-controls="res" aria-expanded="true" />
+      <ul id="res" role="listbox"></ul>
+    </div>
+  </div>
+
+  <dialog class="lightbox" id="lightbox" aria-label={t.lightbox}>
+    <img id="lbImg" alt="" />
+    <p><span id="lbCap"></span><button type="button" id="lbClose">{t.close}</button></p>
+  </dialog>
+</Base>
+
+<script>
+  import '../scripts/workspace';
+</script>

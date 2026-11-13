@@ -1,4 +1,12 @@
-import { jobs, projects, skills, activity, usesTool } from '../data/portfolio';
+import { getContent, usesTool, profile } from '../data/portfolio';
+import { ui, path, type Lang } from '../i18n/ui';
+
+const lang: Lang = document.documentElement.lang === 'en' ? 'en' : 'es';
+const t = ui[lang];
+const { jobs, projects, skills, activity } = getContent(lang);
+
+/* Google Analytics 4: solo envía si gtag está cargado (hay PUBLIC_GA_ID). */
+const track = (name: string, params: Record<string, unknown> = {}) => { try { window.gtag?.('event', name, { site_language: lang, ...params }); } catch { /* sin analytics */ } };
 
 const $ = <T extends HTMLElement = HTMLElement>(s: string) => document.querySelector(s) as T;
 const $$ = <T extends HTMLElement = HTMLElement>(s: string) => Array.from(document.querySelectorAll(s)) as T[];
@@ -12,7 +20,7 @@ const startVT = (document as Document & { startViewTransition?: (cb: () => void)
 /* ---------- reloj de Cúcuta ---------- */
 const clock = $('#clock');
 const tick = () => {
-  try { clock.textContent = 'Cúcuta ' + new Date().toLocaleTimeString('es-CO', { timeZone: 'America/Bogota', hour12: false }); } catch { /* sin Intl */ }
+  try { clock.textContent = 'Cúcuta ' + new Date().toLocaleTimeString(t.locale, { timeZone: 'America/Bogota', hour12: false }); } catch { /* sin Intl */ }
 };
 tick(); setInterval(tick, 1000);
 
@@ -20,13 +28,14 @@ tick(); setInterval(tick, 1000);
 const themeBtn = $<HTMLButtonElement>('#theme');
 const syncTheme = () => {
   const dark = root.dataset.theme === 'dark';
-  $('#themeLbl').textContent = dark ? 'nocturno' : 'diurno';
+  $('#themeLbl').textContent = dark ? t.night : t.day;
   themeBtn.setAttribute('aria-pressed', String(dark));
 };
 syncTheme();
 themeBtn.addEventListener('click', (e) => {
   const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
   const apply = () => { root.dataset.theme = next; syncTheme(); try { localStorage.setItem('rv-theme', next); } catch { /* sin storage */ } };
+  track('theme_change', { theme: next });
   if (!startVT || reduce) { apply(); return; }
   const r = (e.currentTarget as HTMLElement).getBoundingClientRect();
   const x = r.left + r.width / 2, y = r.top + r.height / 2;
@@ -44,9 +53,9 @@ themeBtn.addEventListener('click', (e) => {
 function countUp(el: HTMLElement, to: number, dec: number, suffix: string, ms: number) {
   if (reduce) return;
   const t0 = performance.now();
-  const f = (t: number) => {
-    let p = Math.min(1, (t - t0) / ms); p = 1 - Math.pow(1 - p, 3);
-    el.textContent = (to * p).toLocaleString('es-CO', { minimumFractionDigits: dec, maximumFractionDigits: dec }) + suffix;
+  const f = (now: number) => {
+    let p = Math.min(1, (now - t0) / ms); p = 1 - Math.pow(1 - p, 3);
+    el.textContent = (to * p).toLocaleString(t.locale, { minimumFractionDigits: dec, maximumFractionDigits: dec }) + suffix;
     if (p < 1) requestAnimationFrame(f);
   };
   requestAnimationFrame(f);
@@ -64,13 +73,13 @@ function stagger(el: HTMLElement) {
 const boot = $('#boot'), bootOut = $('#bootOut');
 let done = false;
 const seq: string[] = [
-  '<span class="c">rv-os 4.1</span> <span class="m">· arranque del portfolio de Ricardo Villanueva</span>',
-  'comprobando experiencia ........ <span class="ok">3 años en producción</span>',
-  'montando empresas',
-  ...jobs.slice().reverse().map((j) => `  ${j.start}  ${esc(j.company.padEnd(24, ' '))}${j.active ? '<span class="ok">[ activo ]</span>' : '<span class="m">[ cerrado ]</span>'}`),
-  `montando proyectos ............ <span class="ok">${projects.length} ok</span>`,
-  `cargando stack ................ <span class="ok">${skills.length} ramas</span>`,
-  `actividad github .............. <span class="a">${activity.total.toLocaleString('es-CO')} contribuciones</span>`,
+  `<span class="c">rv-os 4.1</span> <span class="m">· ${t.boot.title}</span>`,
+  `${t.boot.exp} <span class="ok">${t.boot.years}</span>`,
+  t.boot.jobs,
+  ...jobs.slice().reverse().map((j) => `  ${j.start}  ${esc(j.company.padEnd(24, ' '))}${j.active ? `<span class="ok">${t.boot.on}</span>` : `<span class="m">${t.boot.off}</span>`}`),
+  `${t.boot.projects} <span class="ok">${projects.length} ok</span>`,
+  `${t.boot.stack} <span class="ok">${skills.length} ${t.boot.branches}</span>`,
+  `${t.boot.activity} <span class="a">${activity.total.toLocaleString(t.locale)} ${t.boot.contribs}</span>`,
   '<span class="c">$</span> startx',
 ];
 function finish() {
@@ -131,7 +140,7 @@ function layout(id: string | null) {
     const on = p.id === 'p-' + id;
     p.classList.toggle('focused', on);
     const b = p.querySelector<HTMLButtonElement>('[data-zoom]')!;
-    b.textContent = on ? 'mosaico' : 'enfocar';
+    b.textContent = on ? t.mosaic : t.focus;
     b.setAttribute('aria-pressed', String(on));
   });
   requestAnimationFrame(placeCursor);
@@ -139,6 +148,7 @@ function layout(id: string | null) {
 function focusPane(id: string) {
   const next = focused === id ? null : id;
   focused = next;
+  track(next ? 'focus_pane' : 'grid_view', next ? { pane: next } : {});
   document.body.classList.remove('ready');
   const wide = window.innerWidth > 900;
   if (startVT && !reduce && wide) startVT(() => layout(next)); else layout(next);
@@ -168,6 +178,7 @@ function showJob(id: string) {
 }
 $$('[data-job]').forEach((b) => b.addEventListener('click', () => {
   showJob(b.dataset.job!);
+  track('select_job', { job: b.dataset.job });
   if (focused && focused !== 'exp') focusPane('exp');
 }));
 
@@ -178,6 +189,7 @@ function showProj(id: string) {
 }
 $$('[data-proj]').forEach((b) => b.addEventListener('click', () => {
   showProj(b.dataset.proj!);
+  track('select_project', { project: b.dataset.proj });
   if (focused !== 'proj') focusPane('proj');
 }));
 
@@ -196,6 +208,7 @@ document.addEventListener('click', (e) => {
   ($('#lbImg') as HTMLImageElement).alt = b.dataset.caption || '';
   $('#lbCap').textContent = b.dataset.caption || '';
   lb.showModal();
+  track('view_screenshot', { image: b.dataset.shot });
 });
 $('#lbClose').addEventListener('click', () => lb.close());
 lb.addEventListener('click', (e) => { if (e.target === lb) lb.close(); });
@@ -220,14 +233,15 @@ const norm = (s: string) => s.toLowerCase().normalize('NFD').replace(/[^a-z0-9]/
 const goJob = (id: string) => { showJob(id); if (focused !== 'exp') focusPane('exp'); };
 const goProj = (id: string) => { showProj(id); if (focused !== 'proj') focusPane('proj'); };
 const all: Item[] = [
-  ...jobs.map((j) => ({ label: j.company, meta: `experiencia · ${j.dates}`, run: () => goJob(j.id) })),
-  ...jobs.flatMap((j) => [j.client, j.product].filter(Boolean).map((x) => ({ label: x!.name, meta: `vía ${j.company}`, run: () => goJob(j.id) }))),
-  ...projects.map((p) => ({ label: p.name, meta: `proyecto · ${p.kind}`, run: () => goProj(p.id) })),
-  ...skills.flatMap((s) => s.tools.map((t) => ({ label: t, meta: `tecnología · ${s.name}`, run: () => { if (focused) focusPane(focused); lightTool(t); setTimeout(() => lightTool(null), 2600); } }))),
-  { label: 'Contacto', meta: 'email, LinkedIn, GitHub', run: () => { if (focused !== 'perfil') focusPane('perfil'); } },
-  { label: 'Cambiar tema', meta: 'diurno / nocturno', run: () => themeBtn.click() },
-  { label: 'Descargar CV', meta: 'PDF en español', run: () => { location.href = '/cv/Ricardo_Villanueva_CV_ES.pdf'; } },
-  { label: 'Vista mosaico', meta: 'todos los paneles', run: () => { if (focused) focusPane(focused); } },
+  ...jobs.map((j) => ({ label: j.company, meta: `${t.meta.exp} · ${j.dates}`, run: () => goJob(j.id) })),
+  ...jobs.flatMap((j) => [j.client, j.product].filter(Boolean).map((x) => ({ label: x!.name, meta: `${t.meta.via} ${j.company}`, run: () => goJob(j.id) }))),
+  ...projects.map((p) => ({ label: p.name, meta: `${t.meta.proj} · ${p.kind}`, run: () => goProj(p.id) })),
+  ...skills.flatMap((s) => s.tools.map((tool) => ({ label: tool, meta: `${t.meta.tech} · ${s.name}`, run: () => { if (focused) focusPane(focused); lightTool(tool); setTimeout(() => lightTool(null), 2600); } }))),
+  { label: t.actions.contact[0], meta: t.actions.contact[1], run: () => { if (focused !== 'perfil') focusPane('perfil'); } },
+  { label: t.actions.theme[0], meta: t.actions.theme[1], run: () => themeBtn.click() },
+  { label: t.actions.cv[0], meta: t.actions.cv[1], run: () => { location.href = lang === 'es' ? profile.cv.es : profile.cv.en; } },
+  { label: t.actions.lang[0], meta: t.actions.lang[1], run: () => { saveState(); location.href = path(lang === 'es' ? 'en' : 'es'); } },
+  { label: t.actions.mosaic[0], meta: t.actions.mosaic[1], run: () => { if (focused) focusPane(focused); } },
 ];
 let items: Item[] = [], sel = 0;
 function render() {
@@ -236,7 +250,7 @@ function render() {
   sel = 0;
   res.innerHTML = items.length
     ? items.map((it, i) => `<li><button type="button" role="option" aria-selected="${i === sel}" data-i="${i}"><span>${esc(it.label)}</span><small>${esc(it.meta)}</small></button></li>`).join('')
-    : '<li style="padding:12px;color:var(--muted);font-size:13px">Sin resultados. Prueba «vue» o «magnar».</li>';
+    : `<li style="padding:12px;color:var(--muted);font-size:13px">${esc(t.noResults)}</li>`;
 }
 function markSel() {
   res.querySelectorAll<HTMLElement>('[role=option]').forEach((b, i) => {
@@ -246,7 +260,7 @@ function markSel() {
 }
 const openPal = () => { pal.classList.add('open'); q.value = ''; render(); setTimeout(() => q.focus(), 20); };
 const closePal = () => { pal.classList.remove('open'); $('#openPal').focus(); };
-const run = (i: number) => { const it = items[i]; if (!it) return; pal.classList.remove('open'); it.run(); };
+const run = (i: number) => { const it = items[i]; if (!it) return; pal.classList.remove('open'); track('search', { search_term: q.value, result: it.label }); it.run(); };
 $('#openPal').addEventListener('click', openPal);
 q.addEventListener('input', render);
 q.addEventListener('keydown', (e) => {
@@ -264,3 +278,22 @@ document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') { if (pal.classList.contains('open')) closePal(); else if (focused) focusPane(focused); return; }
   if (!typing && /^[1-5]$/.test(e.key)) focusPane(order[Number(e.key) - 1]);
 });
+
+/* ---------- cambio de idioma: conserva panel, empresa y proyecto abiertos ---------- */
+function saveState() {
+  track('language_change', { to: lang === 'es' ? 'en' : 'es' });
+  const job = document.querySelector<HTMLElement>('[data-job][aria-pressed="true"]')?.dataset.job;
+  const proj = document.querySelector<HTMLElement>('[data-proj][aria-pressed="true"]')?.dataset.proj;
+  try { sessionStorage.setItem('rv-state', JSON.stringify({ focused, job, proj })); } catch { /* sin storage */ }
+}
+$$('.lang a').forEach((a) => a.addEventListener('click', saveState));
+try {
+  const raw = sessionStorage.getItem('rv-state');
+  if (raw) {
+    sessionStorage.removeItem('rv-state');
+    const st = JSON.parse(raw) as { focused?: string | null; job?: string; proj?: string };
+    if (st.job) showJob(st.job);
+    if (st.proj) showProj(st.proj);
+    if (st.focused) { focused = st.focused; layout(st.focused); }
+  }
+} catch { /* estado inválido */ }
