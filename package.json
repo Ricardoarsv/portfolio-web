@@ -14,5 +14,8 @@
     "@astrojs/sitemap": "^3.7.4",
     "astro": "^7.4.1",
     "typescript": "^6.0.3"
+  },
+  "engines": {
+    "node": "24.x"
   }
 }
