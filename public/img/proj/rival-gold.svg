@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256" role="img" aria-labelledby="go-t">
+  <title id="go-t">Gold rank emblem</title>
+  <defs>
+    <linearGradient id="go-plate" x1="0" y1="0" x2="0.35" y2="1">
+      <stop offset="0" stop-color="#FFF1A8"/>
+      <stop offset="0.34" stop-color="#FFD700"/>
+      <stop offset="0.70" stop-color="#C79A05"/>
+      <stop offset="1" stop-color="#6B5200"/>
+    </linearGradient>
+    <linearGradient id="go-inner" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#7A5F00"/>
+      <stop offset="1" stop-color="#2E2400"/>
+    </linearGradient>
+    <linearGradient id="go-wing" x1="0" y1="0" x2="1" y2="0.6">
+      <stop offset="0" stop-color="#FFE87A"/>
+      <stop offset="1" stop-color="#8A6A00"/>
+    </linearGradient>
+    <linearGradient id="go-bar" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFF6C8"/>
+      <stop offset="1" stop-color="#D6A800"/>
+    </linearGradient>
+    <radialGradient id="go-aura" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#FFD700" stop-opacity="0.40"/>
+      <stop offset="1" stop-color="#FFD700" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <circle cx="128" cy="128" r="118" fill="url(#go-aura)"/>
+
+  <!-- three blades per side, and the first laurel curl: Gold is where ornament arrives -->
+  <g stroke="#4A3800" stroke-width="4" stroke-linejoin="round">
+    <path d="M65 86 L20 90 L36 110 L65 110 Z" fill="url(#go-wing)"/>
+    <path d="M65 116 L26 126 L40 144 L65 138 Z" fill="url(#go-wing)"/>
+    <path d="M65 146 L38 158 L50 172 L65 164 Z" fill="url(#go-wing)"/>
+    <path d="M191 86 L236 90 L220 110 L191 110 Z" fill="url(#go-wing)"/>
+    <path d="M191 116 L230 126 L216 144 L191 138 Z" fill="url(#go-wing)"/>
+    <path d="M191 146 L218 158 L206 172 L191 164 Z" fill="url(#go-wing)"/>
+  </g>
+
+  <path d="M128 46 L191 79 L191 146 Q191 177 128 210 Q65 177 65 146 L65 79 Z"
+        fill="url(#go-plate)" stroke="#4A3800" stroke-width="5" stroke-linejoin="round"/>
+
+  <path d="M128 68 L174 92 L174 143 Q174 165 128 189 Q82 165 82 143 L82 92 Z"
+        fill="url(#go-inner)" stroke="#241C00" stroke-width="3" stroke-linejoin="round"/>
+
+  <!-- engraved laurel: struck into the plate, not floating on it -->
+  <path d="M96 156 Q106 170 118 178" fill="none" stroke="#FFD700" stroke-width="3" stroke-linecap="round" opacity="0.75"/>
+  <path d="M160 156 Q150 170 138 178" fill="none" stroke="#FFD700" stroke-width="3" stroke-linecap="round" opacity="0.75"/>
+  <path d="M99 162 L92 158 M105 170 L98 168 M112 176 L106 176" stroke="#FFD700" stroke-width="2.5" stroke-linecap="round" opacity="0.6"/>
+  <path d="M157 162 L164 158 M151 170 L158 168 M144 176 L150 176" stroke="#FFD700" stroke-width="2.5" stroke-linecap="round" opacity="0.6"/>
+
+  <path d="M128 74 L168 95 L168 104 L128 84 L88 104 L88 95 Z" fill="#FFF7D0" opacity="0.60"/>
+
+  <g>
+    <rect x="103" y="127" width="50" height="9" rx="2" fill="url(#go-bar)"/>
+    <rect x="93" y="114" width="12" height="35" rx="3" fill="url(#go-bar)" stroke="#4A3800" stroke-width="2.5"/>
+    <rect x="151" y="114" width="12" height="35" rx="3" fill="url(#go-bar)" stroke="#4A3800" stroke-width="2.5"/>
+    <rect x="86" y="123" width="6" height="17" rx="2" fill="#D6A800" stroke="#4A3800" stroke-width="2"/>
+    <rect x="164" y="123" width="6" height="17" rx="2" fill="#D6A800" stroke="#4A3800" stroke-width="2"/>
+  </g>
+
+  <!-- crest point with shoulder wings -->
+  <path d="M128 28 L144 58 L128 72 L112 58 Z" fill="url(#go-plate)" stroke="#4A3800" stroke-width="3.5" stroke-linejoin="round"/>
+  <path d="M112 58 L96 52 L104 66 Z" fill="url(#go-wing)" stroke="#4A3800" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M144 58 L160 52 L152 66 Z" fill="url(#go-wing)" stroke="#4A3800" stroke-width="3" stroke-linejoin="round"/>
+
+  <circle cx="98" cy="100" r="4" fill="#2E2400" stroke="#FFE87A" stroke-width="1.5"/>
+  <circle cx="158" cy="100" r="4" fill="#2E2400" stroke="#FFE87A" stroke-width="1.5"/>
+
+  <g opacity="0.9">
+    <path d="M104 226 L110 220 L116 226 L110 232 Z" fill="#2E2400" stroke="#8A6A00" stroke-width="2"/>
+    <path d="M122 226 L128 220 L134 226 L128 232 Z" fill="#2E2400" stroke="#8A6A00" stroke-width="2"/>
+    <path d="M140 226 L146 220 L152 226 L146 232 Z" fill="#2E2400" stroke="#8A6A00" stroke-width="2"/>
+  </g>
+</svg>

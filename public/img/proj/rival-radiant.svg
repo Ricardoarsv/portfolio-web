@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256" role="img" aria-labelledby="ra-t">
+  <title id="ra-t">Radiant rank emblem</title>
+  <defs>
+    <linearGradient id="ra-plate" x1="0" y1="0" x2="0.35" y2="1">
+      <stop offset="0" stop-color="#FFF0CE"/>
+      <stop offset="0.30" stop-color="#FFBD45"/>
+      <stop offset="0.68" stop-color="#C87E12"/>
+      <stop offset="1" stop-color="#5E3400"/>
+    </linearGradient>
+    <linearGradient id="ra-inner" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#7A4A05"/>
+      <stop offset="1" stop-color="#2A1600"/>
+    </linearGradient>
+    <linearGradient id="ra-wing" x1="0" y1="0" x2="1" y2="0.6">
+      <stop offset="0" stop-color="#FFE9B0"/>
+      <stop offset="1" stop-color="#8A4F00"/>
+    </linearGradient>
+    <linearGradient id="ra-gem" x1="0" y1="0" x2="0.4" y2="1">
+      <stop offset="0" stop-color="#FFFFFF"/>
+      <stop offset="0.45" stop-color="#FFE9B0"/>
+      <stop offset="1" stop-color="#E09A20"/>
+    </linearGradient>
+    <radialGradient id="ra-aura" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#FFBD45" stop-opacity="0.52"/>
+      <stop offset="0.55" stop-color="#FFBD45" stop-opacity="0.16"/>
+      <stop offset="1" stop-color="#FFBD45" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <circle cx="128" cy="128" r="128" fill="url(#ra-aura)"/>
+
+  <!-- corona: the only tier that emits light rather than reflecting it -->
+  <g fill="#FFBD45" opacity="0.34">
+    <path d="M128 0 L134 30 L122 30 Z"/>
+    <path d="M128 256 L134 226 L122 226 Z"/>
+    <path d="M0 128 L30 122 L30 134 Z"/>
+    <path d="M256 128 L226 122 L226 134 Z"/>
+    <path d="M37 37 L62 55 L55 62 Z"/>
+    <path d="M219 37 L194 55 L201 62 Z"/>
+    <path d="M37 219 L62 201 L55 194 Z"/>
+    <path d="M219 219 L194 201 L201 194 Z"/>
+  </g>
+
+  <!-- full four-blade spread, the widest silhouette in the ladder -->
+  <g stroke="#3E2200" stroke-width="4" stroke-linejoin="round">
+    <path d="M65 72 L6 64 L18 90 L65 96 Z" fill="url(#ra-wing)"/>
+    <path d="M65 102 L10 106 L28 128 L65 124 Z" fill="url(#ra-wing)"/>
+    <path d="M65 132 L20 144 L40 164 L65 152 Z" fill="url(#ra-wing)"/>
+    <path d="M65 160 L36 180 L56 194 L72 176 Z" fill="url(#ra-wing)"/>
+    <path d="M191 72 L250 64 L238 90 L191 96 Z" fill="url(#ra-wing)"/>
+    <path d="M191 102 L246 106 L228 128 L191 124 Z" fill="url(#ra-wing)"/>
+    <path d="M191 132 L236 144 L216 164 L191 152 Z" fill="url(#ra-wing)"/>
+    <path d="M191 160 L220 180 L200 194 L184 176 Z" fill="url(#ra-wing)"/>
+  </g>
+
+  <path d="M128 46 L191 79 L191 146 Q191 177 128 210 Q65 177 65 146 L65 79 Z"
+        fill="url(#ra-plate)" stroke="#3E2200" stroke-width="5" stroke-linejoin="round"/>
+
+  <g stroke="#FFF0CE" stroke-width="2" opacity="0.5" fill="none">
+    <path d="M65 79 L128 116 L191 79"/>
+    <path d="M90 170 L128 116 L166 170"/>
+  </g>
+  <path d="M128 46 L191 79 L128 116 Z" fill="#FFFFFF" opacity="0.22"/>
+
+  <path d="M128 68 L174 92 L174 143 Q174 165 128 189 Q82 165 82 143 L82 92 Z"
+        fill="url(#ra-inner)" stroke="#1E0F00" stroke-width="3" stroke-linejoin="round"/>
+
+  <!-- gem core, larger than Diamond's: the ladder's final object -->
+  <g>
+    <path d="M128 96 L158 122 L128 168 L98 122 Z" fill="url(#ra-gem)" stroke="#3E2200" stroke-width="3.5" stroke-linejoin="round"/>
+    <path d="M98 122 L128 122 L128 168 Z" fill="#8A4F00" opacity="0.40"/>
+    <path d="M128 96 L128 122 L158 122 Z" fill="#FFFFFF" opacity="0.60"/>
+    <path d="M98 122 L158 122" stroke="#FFFFFF" stroke-width="2" opacity="0.75"/>
+  </g>
+
+  <g>
+    <rect x="106" y="128" width="44" height="7" rx="2" fill="#FFF8E4"/>
+    <rect x="97" y="118" width="10" height="28" rx="3" fill="#FFE9B0" stroke="#3E2200" stroke-width="2.5"/>
+    <rect x="149" y="118" width="10" height="28" rx="3" fill="#FFE9B0" stroke="#3E2200" stroke-width="2.5"/>
+  </g>
+
+  <!-- the crown: five points, the only literal crown in the ladder -->
+  <g stroke="#3E2200" stroke-width="3.5" stroke-linejoin="round" fill="url(#ra-plate)">
+    <path d="M84 60 L84 26 L100 44 L114 18 L128 40 L142 18 L156 44 L172 26 L172 60 Z"/>
+  </g>
+  <circle cx="114" cy="30" r="4.5" fill="#FFF0CE" stroke="#3E2200" stroke-width="2"/>
+  <circle cx="142" cy="30" r="4.5" fill="#FFF0CE" stroke="#3E2200" stroke-width="2"/>
+  <circle cx="128" cy="52" r="5" fill="#FFFFFF" stroke="#3E2200" stroke-width="2"/>
+
+  <g opacity="0.9">
+    <path d="M104 226 L110 220 L116 226 L110 232 Z" fill="#2A1600" stroke="#8A4F00" stroke-width="2"/>
+    <path d="M122 226 L128 220 L134 226 L128 232 Z" fill="#2A1600" stroke="#8A4F00" stroke-width="2"/>
+    <path d="M140 226 L146 220 L152 226 L146 232 Z" fill="#2A1600" stroke="#8A4F00" stroke-width="2"/>
+  </g>
+</svg>
