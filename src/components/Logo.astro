@@ -1,0 +1,26 @@
+---
+import type { Logo } from '../data/portfolio';
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
+
+interface Props { logo: Logo; alt: string; class?: string }
+const { logo, alt, class: cls = '' } = Astro.props;
+
+/* Los íconos monocromos se incrustan como SVG para que tomen el color del tema (currentColor). */
+let inline = '';
+if (logo.kind === 'mono') {
+  const file = join(process.cwd(), 'public', logo.src);
+  inline = readFileSync(file, 'utf8')
+    .replace(/<\?xml[^>]*>/, '')
+    .replace(/<!--[\s\S]*?-->/g, '')
+    .replace('<svg ', '<svg aria-hidden="true" focusable="false" ');
+}
+---
+{logo.kind === 'mono' && <span class={`mk mono ${cls}`} role="img" aria-label={alt} set:html={inline} />}
+{logo.kind === 'plate' && <span class={`mk plate ${cls}`}><img src={logo.src} alt={alt} loading="lazy" decoding="async" /></span>}
+{logo.kind === 'img' && (
+  <span class={`mk ${cls}`}>
+    <img class:list={['l', { 'has-d': !!logo.dark }]} src={logo.src} alt={alt} loading="lazy" decoding="async" />
+    {logo.dark && <img class="d" src={logo.dark} alt={alt} loading="lazy" decoding="async" />}
+  </span>
+)}
