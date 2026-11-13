@@ -1,39 +1,104 @@
 ---
 import '../styles/global.css';
 import { profile } from '../data/portfolio';
+import { path, type Lang } from '../i18n/ui';
 
-interface Props { title: string; description: string }
-const { title, description } = Astro.props;
-const canonical = new URL(Astro.url.pathname, Astro.site);
-const ogImage = new URL('/og.png', Astro.site);
-const person = {
+interface Props { lang: Lang; title: string; description: string; ogLocale: string; noindex?: boolean }
+const { lang, title, description, ogLocale, noindex = false } = Astro.props;
+
+const site = Astro.site!;
+const alt = (l: Lang) => new URL(path(l), site).href;
+const canonical = new URL(Astro.url.pathname, site).href;
+const ogImage = new URL('/og.png', site).href;
+const avatar = new URL(profile.avatar, site).href;
+
+/* Variables públicas de Vercel; si faltan no se carga nada de Google. */
+const GA_ID = import.meta.env.PUBLIC_GA_ID as string | undefined;
+const GSC = import.meta.env.PUBLIC_GSC_VERIFICATION as string | undefined;
+
+/* Datos estructurados: quién es, dónde trabaja, qué sabe y el sitio en dos idiomas. */
+const jsonLd = {
   '@context': 'https://schema.org',
-  '@type': 'Person',
-  name: profile.fullName,
-  jobTitle: profile.role,
-  address: { '@type': 'PostalAddress', addressLocality: 'Cúcuta', addressCountry: 'CO' },
-  url: Astro.site?.toString(),
-  sameAs: [profile.github, profile.linkedin],
+  '@graph': [
+    {
+      '@type': 'Person',
+      '@id': `${site.href}#person`,
+      name: profile.fullName,
+      alternateName: profile.name,
+      jobTitle: profile.role,
+      description,
+      image: avatar,
+      url: site.href,
+      email: `mailto:${profile.email}`,
+      address: { '@type': 'PostalAddress', addressLocality: 'Cúcuta', addressRegion: 'Norte de Santander', addressCountry: 'CO' },
+      worksFor: [
+        { '@type': 'Organization', name: 'Magnar' },
+        { '@type': 'Organization', name: 'Southteams', url: 'https://southteams.com' },
+      ],
+      alumniOf: [
+        { '@type': 'CollegeOrUniversity', name: 'Universidad Nacional Abierta y a Distancia (UNAD)' },
+        { '@type': 'EducationalOrganization', name: 'Servicio Nacional de Aprendizaje (SENA)' },
+      ],
+      knowsAbout: ['TypeScript', 'Node.js', 'NestJS', 'React', 'Next.js', 'Vue', 'Astro', 'microservices', 'microfrontends', 'web scraping', 'AI agents', 'multi-agent systems', 'Claude Code', 'AWS', 'Google Cloud'],
+      knowsLanguage: ['es', 'en'],
+      sameAs: [profile.github, profile.linkedin],
+    },
+    {
+      '@type': 'WebSite',
+      '@id': `${site.href}#website`,
+      url: site.href,
+      name: 'Ricardo Villanueva · Full-Stack Engineer',
+      inLanguage: ['es', 'en'],
+      publisher: { '@id': `${site.href}#person` },
+    },
+    {
+      '@type': 'ProfilePage',
+      url: canonical,
+      inLanguage: lang,
+      name: title,
+      mainEntity: { '@id': `${site.href}#person` },
+    },
+  ],
 };
 ---
 <!doctype html>
-<html lang="es">
+<html lang={lang}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <meta name="author" content={profile.fullName} />
+    <meta name="robots" content={noindex ? 'noindex, follow' : 'index, follow, max-image-preview:large'} />
+    {GSC && <meta name="google-site-verification" content={GSC} />}
     <link rel="canonical" href={canonical} />
+    <link rel="alternate" hreflang="es" href={alt('es')} />
+    <link rel="alternate" hreflang="en" href={alt('en')} />
+    <link rel="alternate" hreflang="x-default" href={alt('es')} />
+    <link rel="sitemap" href="/sitemap-index.xml" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/img/avatar-80.png" />
     <meta name="theme-color" content="#EFEFEA" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#0E0F11" media="(prefers-color-scheme: dark)" />
+
     <meta property="og:type" content="profile" />
+    <meta property="og:site_name" content="rickdev.tech" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={ogImage} />
-    <meta property="og:locale" content="es_CO" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={title} />
+    <meta property="og:locale" content={ogLocale} />
+    <meta property="og:locale:alternate" content={ogLocale === 'es_CO' ? 'en_US' : 'es_CO'} />
+    <meta property="profile:first_name" content="Ricardo" />
+    <meta property="profile:last_name" content="Villanueva" />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Martian+Mono:wght@400;500;700;800&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
@@ -47,7 +112,22 @@ const person = {
         r.setAttribute('data-theme', t);
       })();
     </script>
-    <script type="application/ld+json" set:html={JSON.stringify(person)} />
+
+    {GA_ID && (
+      <>
+        <link rel="preconnect" href="https://www.googletagmanager.com" />
+        <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}></script>
+        <script is:inline define:vars={{ GA_ID, lang }}>
+          window.dataLayer = window.dataLayer || [];
+          function gtag() { dataLayer.push(arguments); }
+          window.gtag = gtag;
+          gtag('js', new Date());
+          gtag('config', GA_ID, { site_language: lang });
+        </script>
+      </>
+    )}
+
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   </head>
   <body>
     <slot />
